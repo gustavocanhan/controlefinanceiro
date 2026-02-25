@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Modal from "../modal/Modal";
 import Header from "../header/Header";
+import Alert from "../alert/Alert";
 
 export default function ContentHome() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,6 +14,7 @@ export default function ContentHome() {
     <div>
       <Header openModal={openModal} />
       <Modal isOpen={isModalOpen} onClose={closeModal} />
+      <Alert type="sucess" isOpen={true} />
     </div>
   );
 }
