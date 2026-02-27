@@ -5,9 +5,10 @@ import { useEffect, useState } from "react";
 type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 };
 
-export default function Modal({ isOpen, onClose }: ModalProps) {
+export default function Modal({ isOpen, onClose, handleSubmit }: ModalProps) {
   const [modalidade, setModalidade] = useState<"receita" | "despesa">(
     "receita",
   );
@@ -76,7 +77,7 @@ export default function Modal({ isOpen, onClose }: ModalProps) {
             </button>
           </div>
 
-          <form action="" className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label htmlFor="descricao">Descrição</label>
               <input
