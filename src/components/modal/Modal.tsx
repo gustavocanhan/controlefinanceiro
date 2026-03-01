@@ -1,43 +1,19 @@
 "use client";
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { categoriaModalidade } from "./ModalData";
 
 type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 };
 
-export default function Modal({ isOpen, onClose, handleSubmit }: ModalProps) {
+export default function Modal({ isOpen, onClose }: ModalProps) {
   const [modalidade, setModalidade] = useState<"receita" | "despesa">(
     "receita",
   );
 
   const [categoria, setCategoria] = useState<string>("vazio");
-
-  const categoriaModalidade = {
-    receita: [
-      "Salário",
-      "Freelance",
-      "Investimentos",
-      "Doação",
-      "Pix",
-      "Outros",
-    ],
-    despesa: [
-      "Lanches e Refeições",
-      "Transporte",
-      "Moradia",
-      "Lazer",
-      "Saúde",
-      "Educação",
-      "Jogos",
-      "Mercado",
-      "Assinaturas",
-      "Pessoal",
-      "Outros",
-    ],
-  };
 
   useEffect(() => {
     setCategoria("vazio");
@@ -77,7 +53,7 @@ export default function Modal({ isOpen, onClose, handleSubmit }: ModalProps) {
             </button>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form className="space-y-4">
             <div>
               <label htmlFor="descricao">Descrição</label>
               <input
