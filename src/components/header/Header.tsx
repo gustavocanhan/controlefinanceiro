@@ -25,10 +25,12 @@ export default function Header() {
         </div>
       </div>
       {isModalOpen && (
-        <ModalContent
-          isModalOpen={isModalOpen}
-          setIsModalOpen={setIsModalOpen}
-        />
+        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50">
+          <ModalContent
+            isModalOpen={isModalOpen}
+            setIsModalOpen={setIsModalOpen}
+          />
+        </div>
       )}
     </header>
   );

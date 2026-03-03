@@ -16,7 +16,7 @@ export default function CardContent() {
   );
 
   return (
-    <div className="grid grid-cols-4 gap-4 items-center mt-8">
+    <div className="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 items-center mt-8">
       <Card
         backgroundColor="bg-brand-gradient"
         borderColor="border-purple-900/50"
