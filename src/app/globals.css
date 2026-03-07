@@ -5,6 +5,7 @@
   --background-purple: #615fff; /* Este é o seu roxo */
   --foreground: #dadbdc;
   --card: #101828;
+  --container-card: #12151d;
   --danger: #ef4444;
   --success: #00d492;
 
@@ -19,6 +20,7 @@
   --color-purple: var(--background-purple);
 
   --color-card: var(--card);
+  --color-container-card: var(--container-card);
   --color-danger: var(--danger);
   --color-success: var(--success);
 
@@ -40,4 +42,60 @@
     opacity: 0.85;
     cursor: pointer;
   }
+
+  .bg-brand-gradient {
+    background: linear-gradient(
+      135deg,
+      rgba(124, 58, 237, 0.15),
+      rgba(168, 85, 247, 0.08)
+    );
+  }
+
+  .bg-emerald-gradient {
+    background: linear-gradient(
+      135deg,
+      rgba(16, 185, 129, 0.12),
+      rgba(16, 185, 129, 0.04)
+    );
+  }
+
+  .bg-rose-soft-gradient {
+    background: linear-gradient(
+      135deg,
+      rgba(244, 63, 94, 0.12),
+      rgba(244, 63, 94, 0.04)
+    );
+  }
+
+  .bg-sky-gradient {
+    background: linear-gradient(
+      135deg,
+      rgba(14, 165, 233, 0.12),
+      rgba(14, 165, 233, 0.04)
+    );
+  }
+}
+
+/* Scrollbar discreta */
+.scrollbar-discreta {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: rgba(148, 163, 184, 0.25) transparent; /* thumb, track */
+}
+
+/* Chrome, Edge, Safari */
+.scrollbar-discreta::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-discreta::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-discreta::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.22);
+  border-radius: 999px;
+}
+
+.scrollbar-discreta::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.35);
 }

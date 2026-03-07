@@ -1,6 +1,7 @@
 "use client";
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { categoriaModalidade } from "./ModalData";
 
 type ModalProps = {
   isOpen: boolean;
@@ -13,30 +14,6 @@ export default function Modal({ isOpen, onClose }: ModalProps) {
   );
 
   const [categoria, setCategoria] = useState<string>("vazio");
-
-  const categoriaModalidade = {
-    receita: [
-      "Salário",
-      "Freelance",
-      "Investimentos",
-      "Doação",
-      "Pix",
-      "Outros",
-    ],
-    despesa: [
-      "Lanches e Refeições",
-      "Transporte",
-      "Moradia",
-      "Lazer",
-      "Saúde",
-      "Educação",
-      "Jogos",
-      "Mercado",
-      "Assinaturas",
-      "Pessoal",
-      "Outros",
-    ],
-  };
 
   useEffect(() => {
     setCategoria("vazio");
@@ -76,7 +53,7 @@ export default function Modal({ isOpen, onClose }: ModalProps) {
             </button>
           </div>
 
-          <form action="" className="space-y-4">
+          <form className="space-y-4">
             <div>
               <label htmlFor="descricao">Descrição</label>
               <input
@@ -99,11 +76,11 @@ export default function Modal({ isOpen, onClose }: ModalProps) {
                 </option>
                 {categoriaModalidade[modalidade].map((categoria) => (
                   <option
-                    key={categoria}
-                    value={categoria}
+                    key={categoria.texto}
+                    value={categoria.texto}
                     className="bg-gray-800"
                   >
-                    {categoria}
+                    {categoria.icone} {categoria.texto}
                   </option>
                 ))}
               </select>
