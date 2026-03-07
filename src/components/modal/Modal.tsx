@@ -76,11 +76,11 @@ export default function Modal({ isOpen, onClose }: ModalProps) {
                 </option>
                 {categoriaModalidade[modalidade].map((categoria) => (
                   <option
-                    key={categoria}
-                    value={categoria}
+                    key={categoria.texto}
+                    value={categoria.texto}
                     className="bg-gray-800"
                   >
-                    {categoria}
+                    {categoria.icone} {categoria.texto}
                   </option>
                 ))}
               </select>

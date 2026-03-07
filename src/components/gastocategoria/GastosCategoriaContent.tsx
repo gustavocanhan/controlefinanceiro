@@ -10,7 +10,7 @@ export default function GastosCategoriaContent() {
         {categoriaModalidade["despesa"].map((item, index) => (
           <GastosCategoria
             key={index}
-            categoria={item}
+            categoria={item.icone + " " + item.texto}
             valor={faker.number.float({ min: 0, max: 1000 })}
             percentual={faker.number.float({ min: 0, max: 100 }).toFixed(0)}
           />
