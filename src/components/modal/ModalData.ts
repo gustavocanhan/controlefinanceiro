@@ -1,5 +1,5 @@
 export const categoriaModalidade = {
-  receita: [
+  Receita: [
     { icone: "💰", texto: "Salário" },
     { icone: "💻", texto: "Freelance" },
     { icone: "📈", texto: "Investimentos" },
@@ -7,7 +7,7 @@ export const categoriaModalidade = {
     { icone: "💸", texto: "Pix" },
     { icone: "📦", texto: "Outros" },
   ],
-  despesa: [
+  Despesa: [
     { icone: "🍔", texto: "Lanches e Refeições" },
     { icone: "🚌", texto: "Transporte" },
     { icone: "🏠", texto: "Moradia" },

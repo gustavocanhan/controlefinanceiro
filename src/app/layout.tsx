@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Lato } from "next/font/google";
 // @ts-ignore
 import "./globals.css";
-import Header from "@/components/header/Header";
+import ConditionalHeader from "@/components/header/Header";
 
 const lato = Lato({
   variable: "--font-lato",
@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <body className={`${lato.variable} antialiased`}>
-        <Header />
+        <ConditionalHeader />
         {children}
       </body>
     </html>

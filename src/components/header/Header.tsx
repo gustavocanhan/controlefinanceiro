@@ -1,9 +1,19 @@
 "use client";
-import { TrendingUp, Plus } from "lucide-react";
+import { TrendingUp, Plus, Container } from "lucide-react";
 import { useState } from "react";
 import ModalContent from "../modal/ModalContent";
+import { usePathname } from "next/navigation";
 
-export default function Header() {
+export default function ConditionalHeader() {
+  const pathname = usePathname();
+  const hideHeader = ["/", "/register"];
+
+  if (hideHeader.includes(pathname)) return null;
+
+  return <Header />;
+}
+
+function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (

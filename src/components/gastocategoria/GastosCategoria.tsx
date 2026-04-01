@@ -14,7 +14,12 @@ export default function GastosCategoria({
       <div className="flex items-center justify-between">
         <p>{categoria}</p>
         <div className="flex items-center gap-1">
-          <p className="font-bold">R$ {valor.toFixed(2)}</p>
+          <p className="font-bold">
+            {valor.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            })}
+          </p>
           <p className="text-xs text-gray-500">({percentual}%)</p>
         </div>
       </div>
