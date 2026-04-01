@@ -29,7 +29,10 @@ export default function Card({
       </div>
       <div>
         <h1 className={`${valueColor} font-black text-2xl mt-2`}>
-          R$ {value.toLocaleString("pt-BR")}
+          {value.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+          })}
         </h1>
         <p className="text-gray-500 text-xs mt-1">{status}</p>
       </div>

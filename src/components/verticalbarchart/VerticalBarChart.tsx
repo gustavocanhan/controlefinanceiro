@@ -9,8 +9,10 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import { faker } from "@faker-js/faker";
 import { meses } from "./Meses";
+import api from "@/lib/api";
+import { useEffect, useState } from "react";
+import useAuthStore from "@/store/authStore";
 
 ChartJS.register(
   CategoryScale,
@@ -22,23 +24,63 @@ ChartJS.register(
 );
 
 export default function VerticalBarChart() {
+  const [chartData, setChartData] = useState<number[][]>([[], []]);
+
+  const { refreshKey } = useAuthStore();
+
+  useEffect(() => {
+    const fetchChart = async () => {
+      const response = await api.get("/transactions/monthly-chart");
+      const result = response.data.data;
+
+      const mesAtual = new Date().getMonth() + 1;
+      const anoAtual = new Date().getFullYear();
+
+      const ultimosSeisMeses = Array.from({ length: 6 }, (_, i) => {
+        const date = new Date(anoAtual, mesAtual - 1 - (5 - i), 1);
+        return { month: date.getMonth() + 1, year: date.getFullYear() };
+      });
+
+      const receitas = ultimosSeisMeses.map((m) => {
+        const found = result.find(
+          (r: any) =>
+            r._id.month === m.month &&
+            r._id.year === m.year &&
+            r._id.type === "Receita",
+        );
+        return found?.total || 0;
+      });
+
+      const despesas = ultimosSeisMeses.map((m) => {
+        const found = result.find(
+          (r: any) =>
+            r._id.month === m.month &&
+            r._id.year === m.year &&
+            r._id.type === "Despesa",
+        );
+        return found?.total || 0;
+      });
+
+      setChartData([receitas, despesas]);
+    };
+
+    fetchChart();
+  }, [refreshKey]);
+
   const mesAtual = new Date().getMonth() + 1;
-  const qtdMesesEscolhidos = 6;
   const ultimosMeses: string[] = [];
 
-  for (let i = 1; i <= qtdMesesEscolhidos; i++) {
-    const indice = (mesAtual - i + 12) % 12;
+  for (let i = 5; i >= 0; i--) {
+    const indice = (mesAtual - 1 - i + 12) % 12;
     ultimosMeses.push(meses[indice]);
   }
 
-  const labels = ultimosMeses.reverse();
-
   const data = {
-    labels,
+    labels: ultimosMeses,
     datasets: [
       {
         label: "Receitas",
-        data: ultimosMeses.map(() => faker.number.int({ min: 0, max: 1000 })),
+        data: chartData[0],
         backgroundColor: (context: any) => {
           const { chart } = context;
           const { ctx, chartArea } = chart;
@@ -60,7 +102,7 @@ export default function VerticalBarChart() {
       },
       {
         label: "Despesas",
-        data: ultimosMeses.map(() => faker.number.int({ min: 0, max: 1000 })),
+        data: chartData[1],
         backgroundColor: (context: any) => {
           const { chart } = context;
           const { ctx, chartArea } = chart;

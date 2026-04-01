@@ -1,59 +1,86 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import api from "@/lib/api";
 import Card from "./Card";
+import useAuthStore from "@/store/authStore";
+
+interface Summary {
+  receita: number;
+  despesa: number;
+  saldo: number;
+  economia: number;
+  percentEconomia: number;
+  totalReceitas: number;
+  totalDespesas: number;
+}
 
 export default function CardContent() {
-  const [saldoTotal, setSaldoTotal] = useState(10000);
-  const [receitas, setReceitas] = useState(5000);
-  const [despesas, setDespesas] = useState(3000);
-  const [economia, setEconomia] = useState(2000);
+  const [summary, setSummary] = useState<Summary | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const [countReceitas, setCountReceitas] = useState(0);
-  const [countDespesas, setCountDespesas] = useState(0);
+  const { refreshKey } = useAuthStore();
 
-  const [percentEconomia, setPercentEconomia] = useState(
-    (economia / receitas) * 100,
-  );
+  useEffect(() => {
+    const fetchSummary = async () => {
+      try {
+        const response = await api.get("/transactions/summary");
+        setSummary(response.data.data);
+      } catch (err) {
+        console.error("Erro ao buscar resumo:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSummary();
+  }, [refreshKey]);
+
+  const formatCurrency = (value: number) => {
+    return value.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+  };
+
+  if (loading) return <p>Carregando...</p>;
 
   return (
     <div className="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 items-center mt-8">
       <Card
         backgroundColor="bg-brand-gradient"
         borderColor="border-purple-900/50"
-        title="Saldo Total"
+        title="Saldo disponível"
         icon="💰"
-        value={saldoTotal}
-        valueColor="text-purple-500"
-        status={
-          saldoTotal > despesas ? "✅ Saldo positivo" : "❌ Saldo negativo"
-        }
+        value={summary?.saldo ?? 0}
+        valueColor={summary!.saldo > 0 ? "text-purple-500" : "text-red-500"}
+        status={summary!.saldo > 0 ? "✅ Saldo positivo" : "❌ Saldo negativo"}
       />
       <Card
         backgroundColor="bg-emerald-gradient"
         borderColor="border-green-900/50"
         title="Receitas do mês"
         icon="📈"
-        value={receitas}
+        value={summary?.receita ?? 0}
         valueColor="text-green-500"
-        status={`${countReceitas} transação`}
+        status={`${summary?.totalReceitas} transação`}
       />
       <Card
         backgroundColor="bg-rose-soft-gradient"
         borderColor="border-red-900/50"
         title="Despesas do mês"
         icon="📉"
-        value={despesas}
+        value={summary?.despesa ?? 0}
         valueColor="text-red-500"
-        status={`${countDespesas} transação`}
+        status={`${summary?.totalDespesas} transação`}
       />
       <Card
         backgroundColor="bg-sky-gradient"
         borderColor="border-cyan-900/50"
         title="Economia do mês"
         icon="💹"
-        value={economia}
+        value={summary?.economia ?? 0}
         valueColor="text-cyan-400"
-        status={`${percentEconomia}% da receita`}
+        status={`${summary?.percentEconomia.toFixed(1)}% da receita`}
       />
     </div>
   );
